@@ -35,6 +35,18 @@ def home(request):
     results = mycursor.fetchall() 
     return render(request,"index.html",{'results':results})
 
+def edit(request,id):
+    results=delete_user.objects.get(id=id)
+    if request.method=="POST":
+        results.name= request.POST.get('name')
+        results.email= request.POST.get('email')
+        results.phone= request.POST.get('phone')
+        results.password= request.POST.get('password')
+        results.save()
+        return redirect('/home')
+
+    return render(request,"edit.html",{'results':results})
+
 def delte(request,id):
     # sql = "SELECT * FROM users"
     # mycursor.execute(sql)
